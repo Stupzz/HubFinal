@@ -31,7 +31,7 @@ public class GameControl : MonoBehaviour {
         canonActif = new List<Canon>();
         /*GestionScenes.initTab();
         GestionScenes.ajoutTabJoueur(1);
-        GestionScenes.ajoutTabJoueur(4);*/ // a décomenter pour lancer sans le hub
+        GestionScenes.ajoutTabJoueur(4); */// a décommenter pour lancer sans le hub
         int[] joueur = GestionScenes.arrayJoueur();
         for (int i = 0; i < joueur.Length; i++)
         {

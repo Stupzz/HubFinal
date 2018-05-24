@@ -20,6 +20,10 @@ TagManager:
   - Enemy
   - faiblesse
   - Wall
+  - AppleGold
+  - Body
+  - Apple
+  - ApplePourrie
   layers:
   - Default
   - TransparentFX
@@ -56,6 +60,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Body
+    uniqueID: 733680989
+    locked: 0
+  - name: Head
+    uniqueID: 2467359779
     locked: 0
   - name: Blur
     uniqueID: 2139045753
