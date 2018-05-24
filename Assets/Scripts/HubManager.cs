@@ -98,7 +98,12 @@ public class HubManager : MonoBehaviour {
 
     //lance le jeu game
 	void LaunchGame(string game) {
-        gameLaunched = game;
+        if (game.Equals("Osu"))
+        {
+            if (Random.Range(0, 2) != 1) gameLaunched = "OsuColor";
+            else gameLaunched = "Osu";
+        }
+        else gameLaunched = game;
         StartCoroutine("Lancement");
 	}
 

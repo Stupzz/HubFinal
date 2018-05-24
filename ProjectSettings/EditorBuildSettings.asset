@@ -20,3 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Taupe.unity
     guid: 364b09dcb6ec00c4f90dc636b0600ba3
+  - enabled: 1
+    path: Assets/_Scenes/Osu.unity
+    guid: db73f1eafb1323a48a2c7dee1d5f6d76
+  - enabled: 1
+    path: Assets/_Scenes/OsuColor.unity
+    guid: 9bac8de8ead8ec44785f0f9ecf09a20c

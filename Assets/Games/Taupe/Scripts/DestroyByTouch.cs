@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyByTouch : MonoBehaviour {
+public class DestroyByTouch : MonoBehaviour
+{
 
     private Animator animator;
     private GameController gameController;
 
     private int scoreValue;
     public int life;
+
+    private float touchPrecedent = 0;
 
     private void Start()
     {
@@ -23,7 +26,7 @@ public class DestroyByTouch : MonoBehaviour {
         }
 
         animator = GetComponent<Animator>();
-        if( Mathf.FloorToInt(Random.Range(0, 10)) <= 2)
+        if (Mathf.FloorToInt(Random.Range(0, 10)) <= 2)
         {
             life = 2;
             scoreValue = 2;
@@ -37,19 +40,21 @@ public class DestroyByTouch : MonoBehaviour {
             animator.SetBool("Armored", false);
             //GetComponent<Renderer>().material = NormalMat;
         }
-        
+
         animator.SetInteger("Life", life);
     }
 
     void Update()
     {
+        touchPrecedent -= Time.deltaTime;
+        if (Tactil.TouchedSouris(GetComponent<Collider2D>()) && touchPrecedent < 0) StartCoroutine(Touched());
 
-        Touch[] myTouches = Input.touches;
+        /*Touch[] myTouches = Input.touches;
         for (int i = 0; i < Input.touchCount; i++)
         {
             Touch myTouch = Input.GetTouch(i);
             Vector2 touchPos = (Vector2)Camera.main.ScreenToWorldPoint(myTouch.position); // position du touch
-            RaycastHit2D hit = Physics2D.Raycast(touchPos, -Vector2.up);
+            RaycastHit2D hit = Physics2D.Raycast(touchPos, -Vector2.zero);
 
             if (hit.collider != null)
             {
@@ -72,40 +77,15 @@ public class DestroyByTouch : MonoBehaviour {
                         break;
                 }
             }
-        }
-
-        /*
-        //if(Input.GetMouseButtonDown(0))
-        if ((Input.touchCount > 0))
-        {
-            print("touched");
-
-            for (int i = 0; i <= Input.touchCount; i++)
-            {
-                RaycastHit2D raycastHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position), Vector2.zero);
-                //RaycastHit2D raycastHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (raycastHit.collider != null)
-                {
-                    print("hitted");
-                    print(raycastHit.collider.name);
-                    print(gameObject.GetComponent<Collider2D>().name);
-
-                    if (raycastHit.collider.Equals(this.GetComponent<Collider2D>()))
-                        {
-                            print("Cible Clicked");
-                            StartCoroutine(Touched());
-                        }
-                }
-            }
-
         }*/
-
     }
+
 
     IEnumerator Touched()
     {
+        touchPrecedent = 0.5f;
         print(life);
-        life = life - 1;
+        life--;
         print("After life " + life);
         if (life <= 0)
         {
@@ -115,12 +95,12 @@ public class DestroyByTouch : MonoBehaviour {
             Destroy(this.gameObject);
             gameController.AddScore(scoreValue);
         }
-        else if(life >= 1)
+        else if (life >= 1)
         {
             animator.SetInteger("Life", life);
             animator.SetTrigger("Hitted");
-            yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(0.5f);
         }
     }
-
 }
+

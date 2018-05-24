@@ -34,14 +34,11 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(startWait);
         while (gameTime > 2)
         {
-            int myCheck;
             Vector3 spawnPosition;
-            RaycastHit2D hit;
             int count = 0;
             do
             {
                 count++;
-                myCheck = 0;
                 spawnPosition = new Vector2(Random.Range(-spawnValues.x, spawnValues.x), Random.Range(-spawnValues.y, spawnValues.y));
                 //hit = Physics2D.Raycast(spawnPosition, Vector2.up);
                 /*Collider[] hittedColliders  = Physics.OverlapSphere(spawnPosition, radius); 
@@ -55,7 +52,7 @@ public class GameController : MonoBehaviour {
             } while (myCheck > 0);*/
             } while (Physics2D.OverlapCircle(spawnPosition, radius) != null && count <= 100);
             //} while (hit.collider != null);
-            if (count != 20)
+            if (count != 30 )
             {
                 Instantiate(cible, spawnPosition, Quaternion.Euler(0,0,Random.Range(0,360)));
             }
