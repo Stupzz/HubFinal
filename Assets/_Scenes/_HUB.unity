@@ -2611,6 +2611,7 @@ GameObject:
   - component: {fileID: 1641916303}
   - component: {fileID: 1641916302}
   - component: {fileID: 1641916306}
+  - component: {fileID: 1641916307}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2703,6 +2704,7 @@ MonoBehaviour:
   AllGames:
   - {fileID: 114655885175320582, guid: 80974dd65e0ef824381fd9dc97ce6409, type: 2}
   - {fileID: 114655885175320582, guid: 25e25bb59e7608e499b38dfd30897a62, type: 2}
+  - {fileID: 114655885175320582, guid: 6a054cc8b856b914f8a7c267e5f98c6a, type: 2}
   prefabIcon: {fileID: 114736874016401108, guid: 160d250618e5b66459b260c381ffd676,
     type: 2}
   buttons:
@@ -2713,6 +2715,19 @@ MonoBehaviour:
   - {fileID: 1117284749}
   - {fileID: 786594694}
   blur: {fileID: 336693550}
+--- !u!114 &1641916307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1641916301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5fabb1535003c41bd0a2fd602b4714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeOutTexture: {fileID: 2800000, guid: 1491be5b8ac01314dbdbdf0feb421335, type: 3}
+  fadeSpeed: 0.8
 --- !u!1 &1688330997
 GameObject:
   m_ObjectHideFlags: 0

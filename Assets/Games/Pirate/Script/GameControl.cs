@@ -64,7 +64,7 @@ public class GameControl : MonoBehaviour {
         timer -= Time.deltaTime;
         timerText.text = Mathf.RoundToInt(timer).ToString();
 
-        if (timer < 0)
+        if (timer <= 0)
         {
             sceneFin("Gagné");
         }
