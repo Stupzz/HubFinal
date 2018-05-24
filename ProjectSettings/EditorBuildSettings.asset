@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Lights.unity
     guid: 8ff4b11fb9dca824585237fbae52c678
+  - enabled: 1
+    path: Assets/_Scenes/Taupe.unity
+    guid: 364b09dcb6ec00c4f90dc636b0600ba3

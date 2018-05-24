@@ -324,6 +324,8 @@ public class GameControllerLights : MonoBehaviour {
     IEnumerator FinDePartie()
     {
         yield return new WaitForSeconds(3);
+        float fadingTime = GameObject.Find("Main Camera").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadingTime);
         GestionScenes.RetourHub();
     }
 

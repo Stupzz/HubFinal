@@ -163,7 +163,10 @@ public class GameControl : MonoBehaviour {
         else if (canonDetruit) botText.text = "Perdu, vous n'avez plus de canon pour defendre la princesse!";
         else botText.text = "Perdu, vous n'avez pas réussi à défendre la princesse!";
         TopText.text = botText.text;
-        yield return new WaitForSeconds(5);
+
+        yield return new WaitForSeconds(3);
+        float fadingTime = GameObject.Find("Main Camera").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadingTime);
         GestionScenes.RetourHub();
     }
 

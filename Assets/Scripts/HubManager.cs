@@ -36,6 +36,8 @@ public class HubManager : MonoBehaviour {
     private int currentGameIndex = 0;
     private int joueurPresent;
 
+    private String gameLaunched;
+
     private void Start()
     {
 		phase = HubPhase.waitPlayer;
@@ -96,7 +98,8 @@ public class HubManager : MonoBehaviour {
 
     //lance le jeu game
 	void LaunchGame(string game) {
-        SceneManager.LoadScene(game);
+        gameLaunched = game;
+        StartCoroutine("Lancement");
 	}
 
 
@@ -181,5 +184,12 @@ public class HubManager : MonoBehaviour {
         {
             bouton.interactable = false;
         }
+    }
+
+    IEnumerator Lancement()
+    {
+        float fadingTime = GameObject.Find("Main Camera").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadingTime);
+        SceneManager.LoadScene(gameLaunched);
     }
 }
