@@ -2238,8 +2238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41652b02b19c0654db21fa0c063fd713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pv: 40
-  MaxPv: 40
+  pv: 20
+  MaxPv: 20
   pvPercentage: 0
   prefabBouletPirate: {fileID: 0}
   prefabFume: {fileID: 50126911037717570, guid: bffb54c02b3ee34469cab68a9ac6531c,
