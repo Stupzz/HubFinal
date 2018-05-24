@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 public class SwapIcon : MonoBehaviour {
-	private const int nbFrameTotal = 125;
+	public const int nbFrameTotal = 110;
 	private Vector3 basicScale = new Vector3 (0.3f, 0.3f, 0f);
 
 	public ArrayList jeux;
@@ -34,7 +34,7 @@ public class SwapIcon : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		if (!Stop) {
 			if (countFrame++ % (int)nbFrametoChangeSprite == 0) { //Permet de faire ralentir le changement de sprite
