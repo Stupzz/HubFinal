@@ -16,13 +16,13 @@ public class playersRdy : MonoBehaviour {
 			int nbRdy = int.Parse (TextObject.text);
 			++nbRdy;
 			TextObject.text = nbRdy.ToString ();
-			buttonText.text = "Cancel";
+			buttonText.text = "Annuler";
 		} else {
 			readyStatus = false;
 			int nbRdy = int.Parse (TextObject.text);
 			--nbRdy;
 			TextObject.text = nbRdy.ToString ();
-			buttonText.text = "Play";
+			buttonText.text = "Jouer";
 		}
 	}
 }

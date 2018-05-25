@@ -92,14 +92,7 @@ public class GameControllerSnake : MonoBehaviour {
         }
 
         //Presentation, help clavier
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Application.Quit();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Application.LoadLevel(Application.loadedLevel);
-        }
+        GestionScenes.clavierUtils();
     }
 
     IEnumerator AffichageDebut()
@@ -186,10 +179,10 @@ public class GameControllerSnake : MonoBehaviour {
                 }
                 else
                 {
-                    text += "\n Rank " + (i + 1);
+                    text += "\n Rang " + (i + 1);
                 }            
             }
-            else text += "\n Rank " + (i + 1);
+            else text += "\n Rang " + (i + 1);
 
             txt.GetComponent<Text>().text = text;
         }

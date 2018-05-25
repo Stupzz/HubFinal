@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 
     private float radius;
     private int score;
+    private int nbJoueurs;
 
     public Text ScoreText;
     public Text TimeText;
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour {
 		StartCoroutine ("showObjectif");
         //spawnValues.z = Screen.height/2;
         //spawnValues.x = Screen.width/2;
+        nbJoueurs = GestionScenes.getNbJoueur();
 	}
 	
     IEnumerator SpawnTaupeNorm()
@@ -40,18 +42,7 @@ public class GameController : MonoBehaviour {
             {
                 count++;
                 spawnPosition = new Vector2(Random.Range(-spawnValues.x, spawnValues.x), Random.Range(-spawnValues.y, spawnValues.y));
-                //hit = Physics2D.Raycast(spawnPosition, Vector2.up);
-                /*Collider[] hittedColliders  = Physics.OverlapSphere(spawnPosition, radius); 
-                for (int j = 0; j < hittedColliders.Length; j++)
-                {
-                    if (hittedColliders[j].tag == "Cible")
-                    {
-                        myCheck++;
-                    }
-                }
-            } while (myCheck > 0);*/
             } while (Physics2D.OverlapCircle(spawnPosition, radius) != null && count <= 100);
-            //} while (hit.collider != null);
             if (count != 30 )
             {
                 Instantiate(cible, spawnPosition, Quaternion.Euler(0,0,Random.Range(0,360)));
@@ -61,8 +52,8 @@ public class GameController : MonoBehaviour {
                 yield return new WaitForSeconds(5 * taupeDelay);
             }
             
-
-            yield return new WaitForSeconds(Random.Range(0,taupeDelay));
+            if (nbJoueurs > 3) yield return new WaitForSeconds(Random.Range(0, taupeDelay/2));
+            else yield return new WaitForSeconds(Random.Range(0, taupeDelay));
         }
         yield return new WaitForSeconds(5);
     }
@@ -77,7 +68,6 @@ public class GameController : MonoBehaviour {
         else
         {
 			gameOver ();
-            //Application.Quit();
         }
 
         

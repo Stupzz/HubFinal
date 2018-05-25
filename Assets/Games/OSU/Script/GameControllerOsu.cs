@@ -59,7 +59,9 @@ public class GameControllerOsu : MonoBehaviour {
         GestionScenes.clavierUtils();
 		if (compteurObjetCourrant == 0 || timer <= 0) {
 			endTheGame ();
-		} else {
+            enabled = false;
+
+        } else {
 			Touch[] myTouches = Input.touches;
 			for (int i = 0; i < Input.touchCount; i++) {
 				Touch myTouch = Input.GetTouch (i);
@@ -206,8 +208,6 @@ public class GameControllerOsu : MonoBehaviour {
 	}
 
 	void endTheGame(){
-		//lvl++;
-		//initGame ();
 		Destroy (arrowLeft);
 		Destroy (arrowRight);
 		foreach (GameObject ball in myBalls) {
@@ -216,8 +216,17 @@ public class GameControllerOsu : MonoBehaviour {
 		foreach (GameObject ballEx in myBallsExemple) {
 			Destroy (ballEx);
 		}
-		resultBot.text = "GAME OVER !";
-		resultTop.text = "GAME OVER !";
+
+        if (compteurObjetCourrant == 0)
+        {
+            resultBot.text = "Vous avez gagné en " + (120 - (int)timer) + " secondes";
+            resultTop.text = resultBot.text;
+        }
+        else
+        {
+            resultBot.text = "Perdu!";
+            resultTop.text = "Perdu!";
+        }
 		textLeft.text = "";
 		textRight.text = "";
         StartCoroutine(FinParti());
@@ -234,7 +243,6 @@ public class GameControllerOsu : MonoBehaviour {
 
     private void initGame(){
 		radius = prefab.gameObject.GetComponent<Renderer> ().bounds.size.x;
-		//GestionScenes.setNbJoueur(6);
 		myBalls.Clear();
 		myBallsExemple.Clear();
 		compteur = 1;
@@ -264,8 +272,8 @@ public class GameControllerOsu : MonoBehaviour {
 		resultTop.text = "1";
 		yield return new WaitForSeconds (1f);
 
-		resultBot.text = "Trouvez les bonnes boules !";
-		resultTop.text = "Trouvez les bonnes boules !";
+		resultBot.text = "Trouvez la bonne séquence!";
+		resultTop.text = "Trouvez la bonne séquence!";
 		yield return new WaitForSeconds (1.5f);
 
 		resultBot.text = "";

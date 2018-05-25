@@ -48,6 +48,7 @@ public class HubManager : MonoBehaviour {
     {
 
         joueurPresent = int.Parse(nbRdy.text);
+        GestionScenes.setNbJoueur(joueurPresent);
         GestionScenes.clavierUtils();
         if (Input.GetKeyDown("g"))
         {
@@ -156,7 +157,10 @@ public class HubManager : MonoBehaviour {
 
     void godMod()
     {
-         if (Tactil.touchCollider(next.GetComponent<BoxCollider2D>())  || Souris.collide(next.GetComponent<BoxCollider2D>()))
+        GameObject icon = GameObject.Find("Icon(Clone)");
+        if (icon != null) Destroy(icon);
+        blur.SetActive(false);
+        if (Tactil.touchCollider(next.GetComponent<BoxCollider2D>())  || Souris.collide(next.GetComponent<BoxCollider2D>()))
          {
              iconGodMod.GetComponent<SpriteRenderer>().sprite = ((Games)AllGames[++currentGameIndex % AllGames.Length]).sprite;
          }

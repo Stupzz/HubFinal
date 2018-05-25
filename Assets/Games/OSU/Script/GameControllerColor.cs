@@ -13,6 +13,7 @@ public class GameControllerColor : MonoBehaviour {
 	public Text resultBot;
     public GameObject blur;
 
+    private int compteurSequence;
 	private float timer;
     private int nbBall;
     private float xMax = 15.5f;
@@ -29,6 +30,7 @@ public class GameControllerColor : MonoBehaviour {
 	void Start () {
 		enabled = false;
 		StartCoroutine ("showObjectif");
+        compteurSequence = 0;
 	}
 
 	// Update is called once per frame
@@ -42,6 +44,7 @@ public class GameControllerColor : MonoBehaviour {
 	 * */
 	void Update () {
 
+        countTimer();
         string input = Input.inputString;
         switch (input)
         {
@@ -53,74 +56,61 @@ public class GameControllerColor : MonoBehaviour {
         }
         GestionScenes.clavierUtils();
 
-		if (compteurObjetCourrant == 0 || timer <= 0) {
-			endTheGame ();
-		} else {
-			Touch[] myTouches = Input.touches;
-			for (int i = 0; i < Input.touchCount; i++) {
-				Touch myTouch = Input.GetTouch (i);
-				Vector2 touchPos = (Vector2)Camera.main.ScreenToWorldPoint (myTouch.position); // position du touch
-				RaycastHit2D hit = Physics2D.Raycast (touchPos, -Vector2.zero);
+        if (compteurObjetCourrant == 0)
+        {
+            compteurObjetCourrant = nbBall;
+            compteur = 1;
+            PopObject();
+            compteurSequence++;
+        }
+        else if (timer <= 0)
+        {
+            endTheGame();
+        }
+        else
+        {
+            Touch[] myTouches = Input.touches;
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch myTouch = Input.GetTouch(i);
+                Vector2 touchPos = (Vector2)Camera.main.ScreenToWorldPoint(myTouch.position); // position du touch
+                RaycastHit2D hit = Physics2D.Raycast(touchPos, -Vector2.zero);
 
-				if (hit.collider != null) {
-					switch (hit.collider.tag) {
-					case "Cible":
-						switch (myTouch.phase) {
-							
-						case TouchPhase.Began:
-                            if(hit.collider.gameObject.GetComponent<SpriteRenderer>().color.Equals(myBallsExemple[compteur - 1].GetComponent<SpriteRenderer>().color)) //test si c'est bien la bonne couleur qui est hit 
+                if (hit.collider != null)
+                {
+                    switch (hit.collider.tag)
+                    {
+                        case "Cible":
+                            switch (myTouch.phase)
                             {
-								GameObject ball = hit.collider.gameObject;
-								ball.SetActive (false);
-								GameObject ballEx = (GameObject)myBallsExemple [compteur - 1];
-								ballEx.SetActive (false);
-								compteur++;
-								compteurObjetCourrant--;
-							} else {
-								relanceJeu ();
-							}
-							break;
 
-						default:
-							break;
-						}
-						break;
+                                case TouchPhase.Began:
+                                    if (hit.collider.gameObject.GetComponent<SpriteRenderer>().color.Equals(myBallsExemple[compteur - 1].GetComponent<SpriteRenderer>().color)) //test si c'est bien la bonne couleur qui est hit 
+                                    {
+                                        GameObject ball = hit.collider.gameObject;
+                                        ball.SetActive(false);
+                                        GameObject ballEx = (GameObject)myBallsExemple[compteur - 1];
+                                        ballEx.SetActive(false);
+                                        compteur++;
+                                        compteurObjetCourrant--;
+                                    }
+                                    else
+                                    {
+                                        relanceJeu();
+                                    }
+                                    break;
 
-					default:
-						break;
-					}
-				}
-			}
-			countTimer ();
-		}
-		/*else if (Input.GetMouseButtonDown (0)) {
-			Vector2 touchPos = (Vector2)Camera.main.ScreenToWorldPoint (Input.mousePosition); // position du touch
-			RaycastHit2D hit = Physics2D.Raycast (touchPos, -Vector3.down);
-			if (hit.collider != null) {
-				switch (hit.collider.tag) {
-				case "Cible":
-					Transform test = Instantiate (prefabExemple, new Vector2 (0, 0), Quaternion.identity); //création d'un gameObject, car nous ne pouvons pas comparais une instance de material avec une matérial non instancier (list de material)
-					test.gameObject.GetComponent<Renderer> ().material = (Material)myMaterialsTab [compteur - 1];
-					string nameTest = test.gameObject.GetComponent<Renderer> ().material.name;
-					string gameObjectTouchName = hit.collider.gameObject.GetComponent<Renderer> ().material.name;
-					Destroy (test.gameObject);
+                                default:
+                                    break;
+                            }
+                            break;
 
-					if (gameObjectTouchName == nameTest) { //test si c'est bien la bonne couleur qui est hit 
-						GameObject ball = hit.collider.gameObject;
-						ball.SetActive (false);
-						GameObject ballEx = (GameObject)myBallsExemple [compteur - 1];
-						ballEx.SetActive (false);
-						compteur++;
-						compteurObjetCourrant--;
-					} else {
-						relanceJeu ();
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		}*/
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
 	}
 
 	private Vector3 randomPosition()
@@ -133,6 +123,8 @@ public class GameControllerColor : MonoBehaviour {
 	void PopObject(){
 		float x = 1f;
         Transform clone;
+
+        clearJeu();
 
         for (int i = 0; i < nbBall; i++)
         { // pop des cibles
@@ -155,7 +147,6 @@ public class GameControllerColor : MonoBehaviour {
             do
             {
                 spownPosition = randomPosition(); //Les cibles
-                                                  //Debug.Log("ici");
             } while (Physics2D.OverlapCircle(spownPosition, radius) != null); // permet déviter le chevauchement de deux clible.
 
             clone = Instantiate(prefab, spownPosition, Quaternion.identity);
@@ -201,8 +192,16 @@ public class GameControllerColor : MonoBehaviour {
 		foreach (GameObject ballEx in myBallsExemple) {
 			Destroy (ballEx);
 		}
-		resultBot.text = "GAME OVER !";
-		resultTop.text = "GAME OVER !";
+
+        if (compteurSequence > 0)
+        {
+            resultBot.text = "Nombre de séquences effectuées : " + compteurSequence;
+        }
+        else
+        {
+            resultBot.text = "Vous n'avez effectué aucune séquence!";
+        }
+		resultTop.text = resultBot.text;
 		textLeft.text = "";
 		textRight.text = "";
         StartCoroutine(FinParti());
@@ -237,15 +236,14 @@ public class GameControllerColor : MonoBehaviour {
 		resultTop.text = "1";
 		yield return new WaitForSeconds (1f);
 
-		resultBot.text = "Appuyez sur la bonne couleur !";
-		resultTop.text = "Appuyez sur la bonne couleur !";
+		resultBot.text = "Suivre les séquences de couleur!";
+		resultTop.text = "Suivre les séquences de couleur!";
 		yield return new WaitForSeconds (1.5f);
 
 		resultBot.text = "";
 		resultTop.text = "";
 
 		radius = prefab.gameObject.GetComponent<Renderer> ().bounds.size.x;
-		// GestionScenes.setNbJoueur(6);
 		nbBall = GestionScenes.getNbJoueur() * 4;
 		if (nbBall <= 4) nbBall = 6;
 		PopObject ();
@@ -254,4 +252,19 @@ public class GameControllerColor : MonoBehaviour {
 
 		enabled = true;
 	}
+
+    private void clearJeu()
+    {
+        foreach(GameObject ball in myBalls)
+        {
+            Destroy(ball);
+        }
+
+        foreach (GameObject ball in myBallsExemple)
+        {
+            Destroy(ball);
+        }
+        myBalls.Clear();
+        myBallsExemple.Clear();
+    }
 }

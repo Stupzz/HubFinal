@@ -83,7 +83,6 @@ public class DestroyByTouch : MonoBehaviour
 
     IEnumerator Touched()
     {
-        touchPrecedent = 0.5f;
         print(life);
         life--;
         print("After life " + life);
@@ -97,6 +96,7 @@ public class DestroyByTouch : MonoBehaviour
         }
         else if (life >= 1)
         {
+            touchPrecedent = 0.3f; // gère l'invulnérabilité des taupes armures
             animator.SetInteger("Life", life);
             animator.SetTrigger("Hitted");
             yield return new WaitForSeconds(0.5f);

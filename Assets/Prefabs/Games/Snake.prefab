@@ -53,4 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nomExe: Snake
   sprite: {fileID: 21300000, guid: 8da6b0111c062c642997254fb63e8e8e, type: 3}
-  joueurPossible: 02000000030000000400000005000000
+  joueurPossible: 03000000040000000500000006000000
